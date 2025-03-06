@@ -5,7 +5,10 @@
 </head>
 <body>
     <h2>Admin Signup</h2>
-    <form method="POST" action="{{ url('signup') }}">
+    <h5>Already have an Account <a href="{{url('admin/login')}}">Click Here</a></h5>
+
+    <form method="POST" action="{{ url('admin/signup') }}">
+        
         @csrf
         <label>Name:</label>
         <input type="text" name="name" required><br>

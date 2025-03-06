@@ -33,6 +33,7 @@
                 <th>Phone</th>
                 <th>Email</th>
                 <th>PAN Card</th>
+                <th>Status</th> <!-- Added Status Column -->
                 <th>Actions</th>
             </tr>
         </thead>
@@ -44,6 +45,15 @@
                 <td>{{ $agent->phone }}</td>
                 <td>{{ $agent->email }}</td>
                 <td>{{ $agent->pan_card }}</td>
+                <td>
+                    @if($agent->status)
+                        <span style="color: green;">Active</span> |
+                        <a href="{{ route('admin.agents.toggle-status', $agent->id) }}" style="color: red;">Block</a>
+                    @else
+                        <span style="color: red;">Blocked</span> |
+                        <a href="{{ route('admin.agents.toggle-status', $agent->id) }}" style="color: green;">Unblock</a>
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('admin.agents.edit', $agent->id) }}">Edit</a> |
                     <a href="{{ route('admin.agents.delete', $agent->id) }}" onclick="return confirm('Are you sure?')">Delete</a>

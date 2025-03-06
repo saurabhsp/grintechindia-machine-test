@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 
 Route::post('signup', [AdminAuthController::class, 'adminSignup']);
 Route::post('login', [AdminAuthController::class, 'adminLogin']);
+

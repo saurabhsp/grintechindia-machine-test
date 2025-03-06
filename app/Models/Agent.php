@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Agent extends Model
+class Agent extends Authenticatable
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'phone', 'email', 'pan_card', 'password'
+        'name', 'email', 'phone', 'pan_card', 'password', 'status'
     ];
 
-    protected $hidden = [
-        'password'
+    protected $casts = [
+        'status' => 'integer',
     ];
 }
