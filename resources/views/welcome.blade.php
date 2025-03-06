@@ -18,7 +18,5 @@
             For Agent <a href="{{'/agent/login'}}">Login here</a>
         </h2>
         </div>
-
-    
 </body>
 </html>

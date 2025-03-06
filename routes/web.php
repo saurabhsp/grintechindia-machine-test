@@ -20,9 +20,6 @@ Route::get('admin/logout', [AdminAuthController::class, 'adminLogout'])->name('a
 // Admin Dashboard & Agent Management (Protected by Admin Middleware)
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminAuthController::class, 'showDashboard'])->name('admin.dashboard');
-
-    // Agent Management Routes
-    // Route::get('admin/agents', [AgentController::class, 'index'])->name('admin.agents');
     Route::get('admin/agents/create', [AdminAuthController::class, 'create'])->name('admin.agents.create');
     Route::post('admin/agents/store', [AdminAuthController::class, 'store'])->name('admin.agents.store');
     Route::get('admin/agents/{id}/edit', [AdminAuthController::class, 'edit'])->name('admin.agents.edit');
@@ -31,7 +28,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/agents/{id}/toggle-status', [AdminAuthController::class, 'toggleStatus'])->name('admin.agents.toggle-status');
 });
 
-Route::get('showdata', [AgentAuthController::class, 'showdata']);
 Route::get('agent/login', [AgentAuthController::class, 'showLoginForm'])->name('agent.login');
 Route::post('agent/login', [AgentAuthController::class, 'agentLogin']);
 Route::get('agent/logout', [AgentAuthController::class, 'agentLogout'])->name('agent.logout');

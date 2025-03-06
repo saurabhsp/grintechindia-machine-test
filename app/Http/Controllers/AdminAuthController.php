@@ -49,29 +49,6 @@ class AdminAuthController extends Controller
     }
 
 
-
-
-    //   // Store a newly created agent
-    //   public function store(Request $request)
-    //   {
-    //       $request->validate([
-    //           'name' => 'required|string|max:255',
-    //           'email' => 'required|email|unique:agents,email',
-    //           'phone' => 'required|digits:10|unique:agents,phone',
-    //           'pan_card' => 'required|string|max:10|unique:agents,pan_card',
-    //           'password' => 'required|min:6|confirmed',
-    //       ]);
-
-    //       Agent::create([
-    //           'name' => $request->name,
-    //           'email' => $request->email,
-    //           'phone' => $request->phone,
-    //           'pan_card' => $request->pan_card,
-    //           'password' => Hash::make($request->password),
-    //       ]);
-
-    //       return redirect()->route('admin.dashboard')->with('success', 'Agent added successfully!');
-    //   }
     // Show the Edit Agent Form
     public function editAgent($id)
     {
