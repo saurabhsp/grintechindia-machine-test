@@ -31,30 +31,38 @@ class AgentAuthController extends Controller
 
     // Handle agent login
     public function agentLogin(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+{
+    // Validate request data
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        $agent = Agent::where('email', $request->email)->first();
+    // Find the agent by email
+    $agent = Agent::where('email', $request->email)->first();
 
-        if (!$agent) {
-            return back()->with('error', 'No agent found with this email.');
-        }
-
-        if (!Hash::check($request->password, $agent->password)) {
-            return back()->with('error', 'Incorrect password.');
-        }
-
-        // Store session
-        Session::put('id', $agent->id); 
-        Session::put('agent_status', $agent->status);
-        Session::put('agent_name', $agent->name); // ✅ Store the agent's name
-
-        // return "Success";
-        return redirect()->route('agent.dashboard');
+    if (!$agent) {
+        return back()->with('error', 'No agent found with this email.');
     }
+
+    // Verify the password
+    if (!Hash::check($request->password, $agent->password)) {
+        return back()->with('error', 'Incorrect password.');
+    }
+
+    // Check if the agent's status is blocked (0)
+    if ($agent->status == 0) {
+        return back()->with('error', 'Your account is blocked. Contact the admin.');
+    }
+
+    // Store session for logged-in agent
+    Session::put('id', $agent->id);
+    Session::put('agent_status', $agent->status);
+    Session::put('agent_name', $agent->name); // ✅ Store the agent's name
+
+    // Redirect to agent dashboard
+    return redirect()->route('agent.dashboard');
+}
 
 
     // Show the agent dashboard

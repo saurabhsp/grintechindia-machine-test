@@ -17,19 +17,18 @@ class AgentAuthMiddleware
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response
-{
-    // Check if the agent is logged in
-    if (!Session::has('id')) { 
-        return redirect()->route('admin.agents.login')->with('error', 'Access denied. Please log in.');
+    {
+        // Check if the agent is logged in
+        if (!Session::has('id')) { 
+            return redirect()->route('agent.login')->with('error', 'Access denied. Please log in.');
+        }
+
+        // Ensure the agent is not blocked (status = 0)
+        if (Session::get('agent_status') == 0) { 
+            Session::flush(); // Logout the agent by clearing session
+            return redirect()->route('agent.login')->with('error', 'Your account is blocked. Contact admin.');
+        }
+
+        return $next($request);
     }
-    
-
-    // // Ensure the status is properly checked
-    // if ((int) Session::get('agent_status') === 0) { // Force integer comparison
-    //     return redirect()->route('agent.login')->with('error', 'Your account is blocked. Contact admin.');
-    // }
-
-    return $next($request);
-}
-
 }

@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AgentAuthController;
-use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return redirect('admin/signup');
+    return view('welcome');
 });
+
 // Admin Authentication Routes
 Route::get('admin/signup', [AdminAuthController::class, 'showSignupForm'])->name('admin.signup');
 Route::post('admin/signup', [AdminAuthController::class, 'adminSignup']);
