@@ -9,22 +9,18 @@
 
     <h2>Admin Dashboard</h2>
 
-    <!-- Success Message -->
     @if(session('success'))
         <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <!-- Logout Button -->
     <a href="{{ route('admin.logout') }}">Logout</a>
 
     <hr>
 
     <h3>Agent Management</h3>
     
-    <!-- Add Agent Button -->
     <a href="{{ route('admin.agents.create') }}">Add New Agent</a>
 
-    <!-- Agents Table -->
     <table border="1" width="100%">
         <thead>
             <tr>
@@ -33,8 +29,7 @@
                 <th>Phone</th>
                 <th>Email</th>
                 <th>PAN Card</th>
-                <th>Status</th> <!-- Added Status Column -->
-                <th>Actions</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>

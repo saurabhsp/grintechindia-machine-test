@@ -11,21 +11,18 @@ use Illuminate\Support\Facades\Session;
 class AdminAuthController extends Controller
 {
 
-    // Show all agents
     public function index()
     {
         $agents = Agent::all();
         return view('admin.agents.dashboard', compact('agents'));
     }
 
-    // Show the form for creating a new agent
     public function create()
     {
         return view('admin.agents.create');
     }
 
 
-    // Store a new agent
     public function store(Request $request)
     {
         $request->validate([
@@ -42,21 +39,19 @@ class AdminAuthController extends Controller
             'email' => $request->email,
             'pan_card' => $request->pan_card,
             'password' => Hash::make($request->password),
-            'status' => 1, // Default active status
+            'status' => 1, 
         ]);
 
         return redirect()->route('admin.dashboard')->with('success', 'Agent added successfully.');
     }
 
 
-    // Show the Edit Agent Form
     public function editAgent($id)
     {
-        $agent = Agent::findOrFail($id); // Find agent by ID
-        return view('admin.edit-agent', compact('agent')); // Pass agent data to view
+        $agent = Agent::findOrFail($id);
+        return view('admin.edit-agent', compact('agent')); 
     }
 
-    // Update Agent Details
     public function updateAgent(Request $request, $id)
     {
         $request->validate([
@@ -76,19 +71,17 @@ class AdminAuthController extends Controller
 
         return redirect()->route('admin.agents')->with('success', 'Agent details updated successfully!');
     }
-    // Show signup form
     public function showSignupForm()
     {
         return view('admin.signup');
     }
 
-    // Handle admin signup
     public function adminSignup(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:admins,email',
-            'password' => 'required|min:6', // Remove 'confirmed'
+            'password' => 'required|min:6', 
         ]);
 
         $admin = Admin::create([
@@ -102,13 +95,11 @@ class AdminAuthController extends Controller
 
 
 
-    // Show login form
     public function showLoginForm()
     {
         return view('admin.login');
     }
 
-    // Handle admin login
     public function adminLogin(Request $request)
     {
         $request->validate([
@@ -122,36 +113,30 @@ class AdminAuthController extends Controller
             return back()->with('error', 'Invalid credentials.');
         }
 
-        // Store admin session
         Session::put('admin_id', $admin->id);
         Session::put('admin_name', $admin->name);
 
         return redirect()->route('admin.dashboard');
     }
 
-    // Show dashboard with agent data
     public function showDashboard()
     {
         $agents = Agent::all();
         return view('admin.dashboard', compact('agents'));
     }
 
-    // Handle admin logout
     public function adminLogout()
     {
         Session::flush();
         return redirect()->route('admin.login')->with('success', 'Logged out successfully.');
     }
 
-
-    // Show edit form
     public function edit($id)
     {
         $agent = Agent::findOrFail($id);
         return view('admin.agents.edit', compact('agent'));
     }
 
-    // Update agent details
     public function update(Request $request, $id)
     {
         $agent = Agent::findOrFail($id);
@@ -173,17 +158,15 @@ class AdminAuthController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Agent details updated successfully.');
     }
 
-    // Toggle agent status (Block/Unblock)
     public function toggleStatus($id)
     {
         $agent = Agent::findOrFail($id);
-        $agent->status = !$agent->status; // Toggle status
+        $agent->status = !$agent->status; 
         $agent->save();
 
         return redirect()->route('admin.dashboard')->with('success', 'Agent status updated successfully.');
     }
 
-    // Delete an agent
     public function destroy($id)
     {
         $agent = Agent::findOrFail($id);

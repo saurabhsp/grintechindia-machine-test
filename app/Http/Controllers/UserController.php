@@ -9,21 +9,21 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    // Display all users
+    
     public function index()
     {
-        $users = User::all(); // Fetch all users without agent_id
+        $users = User::all(); 
         return view('admin.agents.dashboard', compact('users'));
     }    
 
 
-    // Show form to create a new user
+    
     public function create()
     {
         return view('admin.agents.users.create');
     }
 
-    // Store a new user
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -40,18 +40,18 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // return json_encode('User Created');
+        
         return redirect()->route('agent.users.index')->with('success', 'User added successfully.');
     }
 
-    // Show edit form
+    
     public function edit($id)
     {
         $user = User::findOrFail($id);
         return view('admin.agents.users.edit', compact('user'));
     }
 
-    // Update user details
+    
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -67,7 +67,7 @@ class UserController extends Controller
         return redirect()->route('agent.users.index')->with('success', 'User updated successfully.');
     }
 
-    // Delete user
+    
     public function destroy($id)
     {
         $user = User::findOrFail($id);

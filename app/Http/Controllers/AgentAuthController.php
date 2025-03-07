@@ -17,58 +17,57 @@ class AgentAuthController extends Controller
         $agents = Agent::all();
 
         foreach ($agents as $agent) {
-            dd($agent->status); // This will dump the status of the first agent
+            dd($agent->status);
         }
 
         return response()->json($agents);
     }
 
-    // Show the login form
     public function showLoginForm()
     {
         return view('admin.agents.login');
     }
 
-    // Handle agent login
+    
     public function agentLogin(Request $request)
 {
-    // Validate request data
+    
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
     ]);
 
-    // Find the agent by email
+    
     $agent = Agent::where('email', $request->email)->first();
 
     if (!$agent) {
         return back()->with('error', 'No agent found with this email.');
     }
 
-    // Verify the password
+    
     if (!Hash::check($request->password, $agent->password)) {
         return back()->with('error', 'Incorrect password.');
     }
 
-    // Check if the agent's status is blocked (0)
+    
     if ($agent->status == 0) {
         return back()->with('error', 'Your account is blocked. Contact the admin.');
     }
 
-    // Store session for logged-in agent
+    
     Session::put('id', $agent->id);
     Session::put('agent_status', $agent->status);
-    Session::put('agent_name', $agent->name); // ✅ Store the agent's name
+    Session::put('agent_name', $agent->name); 
 
-    // Redirect to agent dashboard
+    
     return redirect()->route('agent.dashboard');
 }
 
 
-    // Show the agent dashboard
+    
     public function showDashboard()
     {
-        $users = User::all(); // Fetch all users
+        $users = User::all(); 
         return view('admin.agents.dashboard', compact('users'));
     }
     public function agentLogout()

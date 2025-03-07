@@ -18,14 +18,14 @@ class AgentAuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if the agent is logged in
+        
         if (!Session::has('id')) { 
             return redirect()->route('agent.login')->with('error', 'Access denied. Please log in.');
         }
 
-        // Ensure the agent is not blocked (status = 0)
+        
         if (Session::get('agent_status') == 0) { 
-            Session::flush(); // Logout the agent by clearing session
+            Session::flush(); 
             return redirect()->route('agent.login')->with('error', 'Your account is blocked. Contact admin.');
         }
 

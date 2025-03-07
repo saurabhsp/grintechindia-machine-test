@@ -9,12 +9,10 @@
 
     <h2>Agent Dashboard</h2>
 
-    <!-- Success Message -->
     @if(session('success'))
         <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <!-- Logout Button -->
     <a href="{{ route('agent.logout') }}">Logout</a>
 
     <hr>
@@ -22,10 +20,8 @@
     <h3>Users Management</h3>
     <h2>Welcome, {{ session('agent_name') }}</h2>
 
-    <!-- Add User Button -->
     <a href="{{ route('agent.users.create') }}">Add New User</a>
 
-    <!-- Users Table -->
     <table border="1" width="100%">
         <thead>
             <tr>
